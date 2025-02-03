@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <style>
+    /* General Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Page 1 Styles */
+    #page1 {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cloud {
+      background: white;
+      padding: 40px;
+      border-radius: 50%;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      font-size: 2.5rem;
+      font-family: 'Pacifico', cursive;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .cloud::before {
+      content: '🎉🎂🎈';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #thankYouBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      background: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    #thankYouBtn:hover {
+      background: #ff3b2f;
+      transform: scale(1.1);
+    }
+
+    .cracker {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      border-radius: 50%;
+      animation: pop 1s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ff6f61;
+      animation: confetti-fall 5s linear infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    #nextBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    #nextBtn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Page 2 Styles */
+    #page2 {
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .falling-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      font-size: 1.5rem;
+      font-family: 'Dancing Script', cursive;
+      animation: slide-in 1s ease-in-out;
+    }
+
+    @keyframes slide-in {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+
+    #timePicker {
+      margin: 10px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 25px;
+      border: 2px solid #4caf50;
+    }
+
+    #partyTimeBtn, #noPartyBtn, #nextBtn2 {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+      display: none;
+    }
+
+    #partyTimeBtn {
+      background: #4caf50;
+      color: white;
+    }
+
+    #noPartyBtn {
+      background: #ff6f61;
+      color: white;
+    }
+
+    #nextBtn2 {
+      background: #4caf50;
+      color: white;
+    }
+
+    #partyTimeBtn:hover, #noPartyBtn:hover, #nextBtn2:hover {
+      transform: scale(1.1);
+    }
+
+    /* Custom Dialog Box */
+    .dialog-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .dialog-box button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .dialog-box button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Page 3 Styles */
+    #page3 {
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .chocolates img {
+      width: 200px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .chocolates p {
+      background: white;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    textarea {
+      margin: 20px;
+      padding: 10px;
+      border: 2px solid #ff6f61;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    textarea:focus {
+      border-color: #ff3b2f;
+      box-shadow: 0 0 10px #ff3b2f;
+    }
+
+    #sendMessageBtn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    #sendMessageBtn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Page 4 Styles */
+    #page4 {
+      background: linear-gradient(135deg, #84fab0, #8fd3f4);
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    #page4 p {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1 -->
+  <div id="page1">
+    <div class="cloud">Happy Birthday to You</div>
+    <button id="thankYouBtn">THANK YOU</button>
+    <button id="nextBtn">Chalo, Aage Chalte hai →</button>
+  </div>
+
+  <!-- Page 2 -->
+  <div id="page2">
+    <div class="falling-box">Party kab mil rahi hai??</div>
+    <select id="timePicker">
+      <option value="12:00 PM">12:00 PM</option>
+      <option value="1:00 PM">1:00 PM</option>
+      <option value="2:00 PM">2:00 PM</option>
+      <option value="3:00 PM">3:00 PM</option>
+      <option value="4:00 PM">4:00 PM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+      <option value="9:00 PM">9:00 PM</option>
+      <option value="10:00 PM">10:00 PM</option>
+    </select>
+    <button id="partyTimeBtn">Time: Party kab hai</button>
+    <button id="noPartyBtn">Party nhi hai 🥺</button>
+    <button id="nextBtn2">Aage Chalte hai</button>
+  </div>
+
+  <!-- Page 3 -->
+  <div id="page3">
+    <div class="chocolates">
+      <img src="https://rukminim2.flixcart.com/image/850/1000/xif0q/chocolate/o/m/v/-original-imahyvh6fggpe9pj.jpeg?q=20&crop=false" alt="Chocolates">
+      <p>Lijiye, Ab aur maangiyega</p>
+    </div>
+    <textarea placeholder="Message for the Boss"></textarea>
+    <button id="sendMessageBtn">Send Message</button>
+  </div>
+
+  <!-- Page 4 -->
+  <div id="page4">
+    <p>एक बार फिर श्लोक सर की तरफ से आपको जन्मदिन की ढेर सारी शुभकामनाएं|</p>
+    <p>आप हमेशा ऐसे ही मुस्कुराते रहिये</p>
+  </div>
+
+  <!-- Custom Dialog Box -->
+  <div id="customDialog" class="dialog-box" style="display: none;">
+    <p>Send Party Time via:</p>
+    <button id="whatsappBtn">WhatsApp</button>
+    <button id="smsBtn">SMS</button>
+  </div>
+
+  <script>
+    // Page 1 Logic
+    const page1 = document.getElementById('page1');
+    const thankYouBtn = document.getElementById('thankYouBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    thankYouBtn.addEventListener('click', () => {
+      for (let i = 0; i < 50; i++) {
+        const cracker = document.createElement('div');
+        cracker.classList.add('cracker');
+        cracker.style.left = `${Math.random() * 100}%`;
+        cracker.style.top = `${Math.random() * 100}%`;
+        page1.appendChild(cracker);
+        setTimeout(() => cracker.remove(), 1000);
+      }
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 5}s`;
+        page1.appendChild(confetti);
+      }
+      nextBtn.style.display = 'block';
+    });
+
+    nextBtn.addEventListener('click', () => {
+      page1.style.display = 'none';
+      document.getElementById('page2').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('partyTimeBtn').style.display = 'inline-block';
+        document.getElementById('noPartyBtn').style.display = 'inline-block';
+      }, 1500);
+    });
+
+    // Page 2 Logic
+    const partyTimeBtn = document.getElementById('partyTimeBtn');
+    const noPartyBtn = document.getElementById('noPartyBtn');
+    const nextBtn2 = document.getElementById('nextBtn2');
+    const timePicker = document.getElementById('timePicker');
+    const customDialog = document.getElementById('customDialog');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const smsBtn = document.getElementById('smsBtn');
+
+    partyTimeBtn.addEventListener('click', () => {
+      const selectedTime = timePicker.value;
+      customDialog.style.display = 'block';
+
+      whatsappBtn.onclick = () => {
+        const message = `Party time selected: ${selectedTime}`;
+        const whatsappLink = `https://wa.me/+918770098745?text=${encodeURIComponent(message)}`;
+        window.open(whatsappLink, '_blank');
+        customDialog.style.display = 'none';
+        nextBtn2.style.display = 'inline-block';
+      };
+
+      smsBtn.onclick = () => {
+        const message = `Party time selected: ${selectedTime}`;
+        const smsLink = `sms:+918770098745?body=${encodeURIComponent(message)}`;
+        window.open(smsLink, '_blank');
+        customDialog.style.display = 'none';
+        nextBtn2.style.display = 'inline-block';
+      };
+    });
+
+    noPartyBtn.addEventListener('click', () => {
+      alert('Hogya, Koi baat nhi');
+      nextBtn2.style.display = 'inline-block';
+    });
+
+    nextBtn2.addEventListener('click', () => {
+      document.getElementById('page2').style.display = 'none';
+      document.getElementById('page3').style.display = 'flex';
+    });
+
+    // Page 3 Logic
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+
+    sendMessageBtn.addEventListener('click', () => {
+      const message = document.querySelector('textarea').value;
+      if (message) {
+        const whatsappLink = `https://wa.me/+918770098745?text=${encodeURIComponent(message)}`;
+        const smsLink = `sms:+918770098745?body=${encodeURIComponent(message)}`;
+        const choice = confirm('Send via WhatsApp? (OK for WhatsApp, Cancel for SMS)');
+        if (choice) {
+          window.open(whatsappLink, '_blank');
+        } else {
+          window.open(smsLink, '_blank');
+        }
+      }
+      document.getElementById('page3').style.display = 'none';
+      document.getElementById('page4').style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
